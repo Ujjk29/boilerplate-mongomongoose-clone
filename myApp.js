@@ -21,11 +21,9 @@ const createAndSavePerson = (done) => {
     favoriteFoods: ['Dhosa', 'Panner tikka']
   });
   person.save(function (err, data) {
-    if(err) {
-      console.log(err);
+    if (err) {
       done(err);
     } else {
-      console.log("Data saved successfully. Data: " + data);
       done(null, data);
     }
   });
@@ -33,7 +31,7 @@ const createAndSavePerson = (done) => {
 
 const createManyPeople = (arrayOfPeople, done) => {
   Person.create(arrayOfPeople, function (err, data) {
-    if(err) {
+    if (err) {
       done(err);
     } else {
       done(null, data);
@@ -43,7 +41,7 @@ const createManyPeople = (arrayOfPeople, done) => {
 
 const findPeopleByName = (personName, done) => {
   Person.find({name: personName}, function (err, data) {
-    if(err) {
+    if (err) {
       done(err);
     } else {
       done(null, data);
@@ -53,7 +51,7 @@ const findPeopleByName = (personName, done) => {
 
 const findOneByFood = (food, done) => {
   Person.findOne({favoriteFoods: food}, function (err, data) {
-    if(err) {
+    if (err) {
       done(err);
     } else {
       done(null, data);
@@ -63,7 +61,7 @@ const findOneByFood = (food, done) => {
 
 const findPersonById = (personId, done) => {
   Person.findById(personId, function (err, data) {
-    if(err) {
+    if (err) {
       done(err);
     } else {
       done(null, data);
@@ -74,12 +72,12 @@ const findPersonById = (personId, done) => {
 const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
   Person.findById(personId, function (err, person) {
-    if(err) {
+    if (err) {
       done(err);
     }
     person.favoriteFoods.push(foodToAdd);
     person.save(function (err, updatedPerson) {
-      if(err) {
+      if (err) {
         done(err);
       } else {
         done(null, updatedPerson);
@@ -90,8 +88,15 @@ const findEditThenSave = (personId, done) => {
 
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
-
-  done(null /*, data*/);
+  let filter = {name: personName};
+  let update = {age: ageToSet};
+  Person.findOneAndUpdate(filter, update, {new: true}, function (err, data) {
+    if (err) {
+      done(err);
+    } else {
+      done(null, data);
+    }
+  });
 };
 
 const removeById = (personId, done) => {
