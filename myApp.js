@@ -21,11 +21,13 @@ const createAndSavePerson = (done) => {
     favoriteFoods: ['Dhosa', 'Panner tikka']
   });
   person.save(function (err, data) {
-    if(err)
+    if(err) {
       console.log(err);
-    else
-      console.log("Data saved successfully. Data: " + data.json);
-    done(null, data);
+      done(err);
+    } else {
+      console.log("Data saved successfully. Data: " + data);
+      done(null, data);
+    }
   });
 };
 
